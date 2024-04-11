@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advanced Machine Prediction Dashboard</title>
+<!-- Bootstrap CSS -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<!-- DataTables CSS -->
+<link href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+<!-- Chart.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- DataTables JavaScript -->
+<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+<style>
+/* Basic CSS for layout */
+body {
+    font-family: Arial, sans-serif;
+    font-size: 15px;   
+    text-align: center; 
+}
+
+.container {
+    padding: 20px;
+}
+
+.card {
+    margin-bottom: 20px;
+}
+
+/* Responsive layout */
+@media screen and (max-width: 768px) {
+    .card {
+        width: 100%;
+    }
+}
+
+/* Restrict chart size */
+.chart-container {
+    width: 100%;
+    height: 300px; /* Adjust the height as needed */
+}
+</style>
+</head>
+<body>
+    <h1>Top 5 Recommended Products</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Prediction Status</h5>
+
+                    <table id="prediction-table" class="table table-striped table-bordered" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Positive Count</th>
+                                <th>Total Count</th>
+                                <th>Positive Count %</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for index, row in output.iterrows() %}
+                            <tr>
+                                <td>{{ row['name'] }}</td>
+                                <td>{{ row['pos_sent_count'] }}</td>
+                                <td>{{ row['total_sent_count'] }}</td>
+                                <td>{{ row['post_sent_percentage'] }}</td>
+                            </tr>
+                            {% endfor %}
+                            {% if message_display %}
+                            <p>{{ message_display }}</p>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<!-- Custom JavaScript -->
+<script>
+// Function to initialize DataTable
+function initializeDataTable() {
+    $('#prediction-table').DataTable();
+}
+
+// Initial update with a bar chart
+initializeDataTable();
+</script>
+
+</body>
+</html>
